@@ -4,7 +4,7 @@ const documentJson = '''
 {
   "metadata" : {
   "title" : "My Document",
-  "modified" : "2024-08-02"
+  "modified" : "2023-07-05"
   },
   "blocks" : [
     {
@@ -87,7 +87,7 @@ sealed class Block {
       {'type': 'p', 'text': String text} => ParagraphBlock(text),
       {'type': 'checkbox', 'text': String text, 'checked': bool checked} =>
         CheckboxBlock(text, checked),
-      _ => throw const FormatException('Unexpected JSON format'),
+      _ => throw const FormatException('Unexpected JSON format')
     };
   }
 }

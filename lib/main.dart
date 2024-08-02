@@ -100,10 +100,22 @@ String formatDate(DateTime dateTime) {
   var today = DateTime.now();
   var difference = dateTime.difference(today);
 
+  // 날짜 차이를 일 단위로 계산
+  var inDays = difference.inDays;
+  var inMonths = (inDays / 30).round(); // 대략적인 달 수
+  var inYears = (inDays / 365).round(); // 대략적인 년 수
+
   return switch (difference) {
     Duration(inDays: 0) => 'today',
-    Duration(inDays: 1) => 'tommorrow',
+    Duration(inDays: 1) => 'tomorrow',
     Duration(inDays: -1) => 'yesterday',
+    Duration(inDays: var days) when days >= 365 =>
+      '${days ~/ 365} years from now',
+    Duration(inDays: var days) when days <= -365 =>
+      '${(days.abs() ~/ 365)} years ago',
+    Duration(inDays: var days) when days >= 30 => '$inMonths months from now',
+    Duration(inDays: var days) when days <= -30 =>
+      '${inMonths.abs()} months ago',
     Duration(inDays: var days) when days > 7 => '${days ~/ 7} weeks from now',
     Duration(inDays: var days) when days < -7 => '${days.abs() ~/ 7} weeks ago',
     Duration(inDays: var days, isNegative: true) => '${days.abs()} days ago',
